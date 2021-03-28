@@ -26,6 +26,14 @@ sudo pip3 install opencv-contrib-python
 sudo pip3 install imutils
 sudo pip3 install opencv-python
 
-'''
+```
 
-### The car is wired to the pins documented in the car.py file 
+## The Car's wiring
+
+The car is wired so that the left turn, right turn, forward, and backward are controlled by pin 2, 3, 4, and 17 respectively. 
+
+left = 2
+right = 3
+forward = 4
+backward = 17
+
