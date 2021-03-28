@@ -1,11 +1,6 @@
 # A Raspberry Pi remote controlled car
 
-
-## Preconditions
-
-* Raspberry Pi 4, 2GB is recommended for optimal performance. However you can use a Pi 3 or older, you may see a increase in latency.
-* Raspberry Pi 4 Camera Module or Pi HQ Camera Module (Newer version)
-* Python 3 recommended.
+The Flask site used to develop this project is heavily based on https://github.com/EbenKouao/pi-camera-stream-flask.
 
 ## Library dependencies
 Install the following dependencies to create camera stream.
