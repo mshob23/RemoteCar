@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin: auto;
+  background-color: black;
+  opacity:0.6;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px; 
+}
+
+.navbar a:hover {
+
+}
+
+.navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.main {
+  padding: 16px;
+  margin-bottom: 30px;
+}
+
+
+.camera-movement{ 
+  float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lights-button{
+	float: right;
+}
+
+i.fa {
+  display: inline-block;
+  border-radius: 60px;
+  box-shadow: 0px 0px 2px #888;
+  padding: 0.5em 0.6em;
+  
+
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+	
+//CSS
+.camera-bg {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+
+    /* Full height */
+  height: 100%;
+
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.top-right-logo {
+  position: absolute;
+  top: 3%;
+  left: 2%;
+  font-size: 38px;
+  color: white;
+  opacity: 0.5;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</style>
+</head>
+
+<title>RC Car Stream</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<body>
+
+<div class="main" id="newpost">
+  <img  class="camera-bg" style="width: 100%; height:80%; background-attachment: fixed;" id="bg" class="center" src="{{ url_for('video_feed') }}">
+  <!--<img  class="camera-bg" style="width: 100%; height:80%; background-attachment: fixed;" id="bg" class="center" src="https://www.psdbox.com/wp-content/uploads/2011/01/security-camera-photoshop-effect.jpg">-->
+     
+</div>
+
+  <div class="top-right-logo">
+  	<a></a></a>
+  </div>
+
+
+<div class="navbar">
+
+    <div class="ignoreCall">
+          <a id=decline class="but_def">
+	      <button id= "lbutton" onclick = "pressR()" type="button" style = "background: red;" class="btn btn-primary">Left</button>
+		<button id="rbutton" type="button" onclick = "pressL()" style = "background: red;" class="btn btn-dark">Right</button>
+		<button id="fbutton" type="button" onclick = "pressF()" style = "background: red;" class="btn btn-dark">Foward</button>
+		<button id="bbutton" type="button" onclick = "pressB()" style = "background: red;" class="btn btn-dark">Backward</button>
+		<button id="bbutton" type="button" onclick = "pressS()" style = "background: red;" class="btn btn-dark">Stop</button>
+         </a>       
+    </div>
+
+</div>
+
+
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script>
+	var leftB = false;
+	var rightB = false;
+	var forwardB = false;
+	var backwardB = false;
+	document.onkeydown = function(event){
+		switch(event.keyCode){
+			case 37:
+				if(!rightB){
+					rightB = true;
+					pressR();
+				}
+				break;
+			case 38:
+				if(!forwardB){
+					forwardB = true;
+					pressF();
+				}
+				break;
+			case 39:
+				if(!leftB){
+					leftB = true;
+					pressL();
+				}
+				break;
+			case 40:
+				if(!backwardB){
+					backwardB = true;
+					pressB();
+				}
+				break;
+		}
+	};
+	document.onkeyup = function(event){
+		switch(event.keyCode){
+			case 37:
+				rightB = false;
+				tLift();
+				break;
+			case 38:
+				forwardB = false;
+				gLift();
+				break;
+			case 39:
+				leftB = false;
+				tLift();
+				break;
+			case 40:
+				backwardB = false;
+				gLift();
+				break;
+		}
+	};
+	function gLift(){
+		$.ajax({
+			url: "/stopg",
+			type: "POST",
+		});
+	}	
+	function tLift(){
+		$.ajax({
+			url: "/stopt",
+			type: "POST",
+		});
+	}	
+	function pressL(){
+		$.ajax({
+			url: "/movel",
+			type: "POST",
+		});
+	}	
+	function pressR(){
+		$.ajax({
+			url: "/mover",
+			type: "POST",
+		});
+	}	
+	function pressF(){
+		$.ajax({
+			url: "/movef",
+			type: "POST",
+		});
+	}	
+	function pressB(){
+		$.ajax({
+			url: "/moveb",
+			type: "POST",
+		});
+	}
+
+	function pressS(){
+		$.ajax({
+			url: "/moves",
+			type: "POST",
+		});
+	}	
+</script>
+   
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
+
