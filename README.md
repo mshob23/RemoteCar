@@ -30,10 +30,4 @@ sudo pip3 install opencv-python
 
 ## The Car's wiring
 
-The car is wired so that the left turn, right turn, forward, and backward are controlled by pin 2, 3, 4, and 17 respectively. 
-
-left = 2
-right = 3
-forward = 4
-backward = 17
-
+The car is wired so that the left turn, right turn, forward, and backward are controlled by pin 2, 3, 4, and 17 respectively. Each pin is connected to a 100k Ohm resistor which connects to the base of a transistor that runs across the terminals of the button on the deconstructed controller for the car. The car can be seen in action here: https://youtu.be/g0C2OMWqAbU.
